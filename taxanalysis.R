@@ -93,6 +93,7 @@ ggplot(tottax,aes(x=(income/1000),y=change_eff,color=filing_type))+
           size= rel(.8)
         ))
 
+
 ggplot(tottax,aes(x=(income),y=change_eff,color=filing_type))+
   geom_smooth(se=FALSE)+
   scale_y_continuous(labels= scales::percent, name="Change in Effective Rate", limits=c(-.015,-.01))+
