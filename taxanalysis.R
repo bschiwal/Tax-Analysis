@@ -6,10 +6,10 @@ require(tidyverse)
 
 ##New Rate Schedule###
 sglnewmin<-c(0,54725)
-sglnewmax<-c(54725,9999999999)
+sglnewmax<-c(54725,Inf)
 sglnewrate<-c(0,.015)
 mfjnewmin<-c(0,95600)
-mfjnewmax<-format(c(95600,9999999999), scientific = FALSE)
+mfjnewmax<-c(95600,Inf)
 mfjnewrate<-c(0,.015)
 
 ###Current Rate Schedule####
