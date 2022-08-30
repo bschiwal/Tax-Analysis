@@ -67,31 +67,13 @@ tottax<-data.frame(income=income,
   mutate(change = proposed-current,
          current_eff = round(current/income,4) ,
          proposed_eff = round(proposed/income,4),
-         change_eff = proposed_eff-current_eff
+         change_eff = proposed_eff-current_eff,
+         change_pct = change/current
   )
          
 
 
 rm(income,mfjtaxcur,mfjtaxnew,sgltaxcur,sgltaxnew,mfjcur,mfjnew,sglcur,sglnew)
-
-
-ggplot(tottax,aes(x=(income/1000),y=change_eff,color=filing_type))+
-  geom_smooth(se=FALSE)+
-  scale_y_continuous(labels= scales::percent, name="Change in Effective Rate", limits=c(-.015,-.01))+
-  scale_x_continuous(name="Taxable Income (Thousands)", limits= c(0,10000), breaks=seq(0,10000,1000))+
-  labs(color="Filing Type",
-       subtitle="Under Governor's Proposed Plan",
-       title="Change in Effective Rate by Income Level",
-       caption = "Made by @BSchiwal")+
-  theme(plot.title=element_text(
-          hjust=.5,
-          family="Calibri", face="bold",
-          size=rel(1.2)),
-        plot.subtitle = element_text(
-          hjust=.5,
-          family="Calibri",
-          size= rel(.8)
-        ))
 
 
 ggplot(tottax,aes(x=(income),y=change_eff,color=filing_type))+
@@ -113,6 +95,25 @@ ggplot(tottax,aes(x=(income),y=change_eff,color=filing_type))+
       size= rel(.8)
     ))
 dev.print(file="ChangeInEffectiveTaxRate.png",device=png, height=600,width=800)
+dev.off()
+
+ggplot(tottax,aes(x=(income/1000),y=change_pct,color=filing_type))+
+  geom_smooth(se=FALSE)+
+  scale_y_continuous(labels= scales::percent, name="Percent Change in Tax Owed")+
+  scale_x_continuous(labels= scales::comma, name="Taxable Income (Thousands)", limits= c(0,10000), breaks=seq(0,10000,1000))+
+  labs(color="Filing Type",
+       subtitle="Under Governor's Proposed Plan",
+       title="Percent Change in Tax Owed by Income Level",
+       caption = "Made by @BSchiwal")+
+  theme(plot.title=element_text(
+    hjust=.5,
+     face="bold",
+    size=rel(1.2)),
+    plot.subtitle = element_text(
+      hjust=.5,
+      size= rel(.8)
+    ))
+dev.print(file="ChangeInTaxOwed.png",device=png, height=600,width=800)
 dev.off()
 
 
